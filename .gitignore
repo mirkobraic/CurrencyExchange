@@ -1,0 +1,19 @@
+*.iml
+.gradle
+.DS_Store
+/captures
+.externalNativeBuild
+.cxx
+
+## User settings
+xcuserdata/
+
+**/local.properties
+**/.idea
+**/build
+
+## Gcc Patch
+**/*.gcno
+
+
+.build/
