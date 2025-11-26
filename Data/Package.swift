@@ -5,22 +5,35 @@ import PackageDescription
 
 let package = Package(
     name: "Data",
+    platforms: [.iOS(.v18)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Data",
-            targets: ["Data"]
+            name: "CurrencyDataSource",
+            targets: ["CurrencyDataSource"]
+        ),
+        .library(
+            name: "ExchangeRateDataSource",
+            targets: ["ExchangeRateDataSource"]
         ),
     ],
+    dependencies: [
+        .package(name: "Domain", path: "../Domain"),
+        .package(name: "Shared", path: "../Shared"),
+    ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Data"
+            name: "CurrencyDataSource",
+            dependencies: [
+                .product(name: "CurrencySelectorDomain", package: "Domain"),
+                .product(name: "Shared", package: "Shared"),
+            ]
         ),
-        .testTarget(
-            name: "DataTests",
-            dependencies: ["Data"]
+        .target(
+            name: "ExchangeRateDataSource",
+            dependencies: [
+                .product(name: "ExchangeCalculatorDomain", package: "Domain"),
+                .product(name: "Shared", package: "Shared"),
+            ]
         ),
     ]
 )

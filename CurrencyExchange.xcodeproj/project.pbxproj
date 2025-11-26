@@ -6,6 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A2DC3F2F2ED6823300ACC7B5 /* CurrencyDataSource in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F2E2ED6823300ACC7B5 /* CurrencyDataSource */; };
+		A2DC3F312ED6823300ACC7B5 /* ExchangeRateDataSource in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F302ED6823300ACC7B5 /* ExchangeRateDataSource */; };
+		A2DC3F332ED6823300ACC7B5 /* CurrencySelectorDomain in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F322ED6823300ACC7B5 /* CurrencySelectorDomain */; };
+		A2DC3F352ED6823300ACC7B5 /* ExchangeCalculatorDomain in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F342ED6823300ACC7B5 /* ExchangeCalculatorDomain */; };
+		A2DC3F372ED6823300ACC7B5 /* CurrencySelector in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F362ED6823300ACC7B5 /* CurrencySelector */; };
+		A2DC3F392ED6823300ACC7B5 /* ExchangeCalculator in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F382ED6823300ACC7B5 /* ExchangeCalculator */; };
+		A2DC3F3B2ED6823300ACC7B5 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F3A2ED6823300ACC7B5 /* Shared */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		A2D8184A2ED65C480020FB0C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -33,9 +43,22 @@
 		A2D818762ED665B00020FB0C /* Shared */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Shared; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A2DC3F2D2ED6822100ACC7B5 /* Exceptions for "CurrencyExchange" folder in "CurrencyExchange" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = A2D8183B2ED65C250020FB0C /* CurrencyExchange */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A2D8183E2ED65C250020FB0C /* CurrencyExchange */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A2DC3F2D2ED6822100ACC7B5 /* Exceptions for "CurrencyExchange" folder in "CurrencyExchange" target */,
+			);
 			path = CurrencyExchange;
 			sourceTree = "<group>";
 		};
@@ -56,6 +79,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2DC3F312ED6823300ACC7B5 /* ExchangeRateDataSource in Frameworks */,
+				A2DC3F352ED6823300ACC7B5 /* ExchangeCalculatorDomain in Frameworks */,
+				A2DC3F3B2ED6823300ACC7B5 /* Shared in Frameworks */,
+				A2DC3F2F2ED6823300ACC7B5 /* CurrencyDataSource in Frameworks */,
+				A2DC3F392ED6823300ACC7B5 /* ExchangeCalculator in Frameworks */,
+				A2DC3F372ED6823300ACC7B5 /* CurrencySelector in Frameworks */,
+				A2DC3F332ED6823300ACC7B5 /* CurrencySelectorDomain in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +116,7 @@
 				A2D8183E2ED65C250020FB0C /* CurrencyExchange */,
 				A2D8184C2ED65C480020FB0C /* CurrencyExchangeTests */,
 				A2D818562ED65C480020FB0C /* CurrencyExchangeUITests */,
+				A2D818772ED6800D0020FB0C /* Frameworks */,
 				A2D8183D2ED65C250020FB0C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,6 +129,13 @@
 				A2D818532ED65C480020FB0C /* CurrencyExchangeUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A2D818772ED6800D0020FB0C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,6 +158,13 @@
 			);
 			name = CurrencyExchange;
 			packageProductDependencies = (
+				A2DC3F2E2ED6823300ACC7B5 /* CurrencyDataSource */,
+				A2DC3F302ED6823300ACC7B5 /* ExchangeRateDataSource */,
+				A2DC3F322ED6823300ACC7B5 /* CurrencySelectorDomain */,
+				A2DC3F342ED6823300ACC7B5 /* ExchangeCalculatorDomain */,
+				A2DC3F362ED6823300ACC7B5 /* CurrencySelector */,
+				A2DC3F382ED6823300ACC7B5 /* ExchangeCalculator */,
+				A2DC3F3A2ED6823300ACC7B5 /* Shared */,
 			);
 			productName = CurrencyExchange;
 			productReference = A2D8183C2ED65C250020FB0C /* CurrencyExchange.app */;
@@ -408,6 +453,7 @@
 				DEVELOPMENT_TEAM = GK2UCL3L68;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CurrencyExchange/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -440,6 +486,7 @@
 				DEVELOPMENT_TEAM = GK2UCL3L68;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CurrencyExchange/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -513,15 +560,20 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GK2UCL3L68;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CurrencyExchangeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = CurrencyExchange;
 			};
 			name = Debug;
@@ -533,15 +585,20 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GK2UCL3L68;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CurrencyExchangeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = CurrencyExchange;
 			};
 			name = Release;
@@ -586,6 +643,37 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A2DC3F2E2ED6823300ACC7B5 /* CurrencyDataSource */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CurrencyDataSource;
+		};
+		A2DC3F302ED6823300ACC7B5 /* ExchangeRateDataSource */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ExchangeRateDataSource;
+		};
+		A2DC3F322ED6823300ACC7B5 /* CurrencySelectorDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CurrencySelectorDomain;
+		};
+		A2DC3F342ED6823300ACC7B5 /* ExchangeCalculatorDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ExchangeCalculatorDomain;
+		};
+		A2DC3F362ED6823300ACC7B5 /* CurrencySelector */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CurrencySelector;
+		};
+		A2DC3F382ED6823300ACC7B5 /* ExchangeCalculator */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ExchangeCalculator;
+		};
+		A2DC3F3A2ED6823300ACC7B5 /* Shared */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Shared;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A2D818342ED65C250020FB0C /* Project object */;
 }

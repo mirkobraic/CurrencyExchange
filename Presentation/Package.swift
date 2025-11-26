@@ -5,22 +5,44 @@ import PackageDescription
 
 let package = Package(
     name: "Presentation",
+    platforms: [.iOS(.v18)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Presentation",
-            targets: ["Presentation"]
+            name: "CurrencySelector",
+            targets: ["CurrencySelector"]
+        ),
+        .library(
+            name: "ExchangeCalculator",
+            targets: ["ExchangeCalculator"]
         ),
     ],
+    dependencies: [
+        .package(name: "Domain", path: "../Domain"),
+        .package(name: "Shared", path: "../Shared"),
+    ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Presentation"
+            name: "CurrencySelector",
+            dependencies: [
+                .product(name: "CurrencySelectorDomain", package: "Domain"),
+                .product(name: "Shared", package: "Shared"),
+            ]
+        ),
+        .target(
+            name: "ExchangeCalculator",
+            dependencies: [
+                .product(name: "ExchangeCalculatorDomain", package: "Domain"),
+                .product(name: "Shared", package: "Shared"),
+            ]
+        ),
+
+        .testTarget(
+            name: "CurrencySelectorTests",
+            dependencies: ["CurrencySelector"]
         ),
         .testTarget(
-            name: "PresentationTests",
-            dependencies: ["Presentation"]
+            name: "ExchangeCalculatorTests",
+            dependencies: ["ExchangeCalculator"]
         ),
     ]
 )
