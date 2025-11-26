@@ -7,13 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A2DC3F2F2ED6823300ACC7B5 /* CurrencyDataSource in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F2E2ED6823300ACC7B5 /* CurrencyDataSource */; };
-		A2DC3F312ED6823300ACC7B5 /* ExchangeRateDataSource in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F302ED6823300ACC7B5 /* ExchangeRateDataSource */; };
-		A2DC3F332ED6823300ACC7B5 /* CurrencySelectorDomain in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F322ED6823300ACC7B5 /* CurrencySelectorDomain */; };
-		A2DC3F352ED6823300ACC7B5 /* ExchangeCalculatorDomain in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F342ED6823300ACC7B5 /* ExchangeCalculatorDomain */; };
-		A2DC3F372ED6823300ACC7B5 /* CurrencySelector in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F362ED6823300ACC7B5 /* CurrencySelector */; };
-		A2DC3F392ED6823300ACC7B5 /* ExchangeCalculator in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F382ED6823300ACC7B5 /* ExchangeCalculator */; };
-		A2DC3F3B2ED6823300ACC7B5 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = A2DC3F3A2ED6823300ACC7B5 /* Shared */; };
+		A28513242ED793DD002C6E37 /* DataLayer in Frameworks */ = {isa = PBXBuildFile; productRef = A28513232ED793DD002C6E37 /* DataLayer */; };
+		A28513262ED793DD002C6E37 /* DomainLayer in Frameworks */ = {isa = PBXBuildFile; productRef = A28513252ED793DD002C6E37 /* DomainLayer */; };
+		A28513282ED793DD002C6E37 /* PresentationLayer in Frameworks */ = {isa = PBXBuildFile; productRef = A28513272ED793DD002C6E37 /* PresentationLayer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,10 +33,9 @@
 		A2D8183C2ED65C250020FB0C /* CurrencyExchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyExchange.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2D818492ED65C480020FB0C /* CurrencyExchangeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurrencyExchangeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2D818532ED65C480020FB0C /* CurrencyExchangeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurrencyExchangeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A2D818732ED665B00020FB0C /* Data */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Data; sourceTree = "<group>"; };
-		A2D818742ED665B00020FB0C /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
-		A2D818752ED665B00020FB0C /* Presentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Presentation; sourceTree = "<group>"; };
-		A2D818762ED665B00020FB0C /* Shared */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Shared; sourceTree = "<group>"; };
+		A2D818732ED665B00020FB0C /* DataLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DataLayer; sourceTree = "<group>"; };
+		A2D818742ED665B00020FB0C /* DomainLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DomainLayer; sourceTree = "<group>"; };
+		A2D818752ED665B00020FB0C /* PresentationLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PresentationLayer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -79,13 +74,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2DC3F312ED6823300ACC7B5 /* ExchangeRateDataSource in Frameworks */,
-				A2DC3F352ED6823300ACC7B5 /* ExchangeCalculatorDomain in Frameworks */,
-				A2DC3F3B2ED6823300ACC7B5 /* Shared in Frameworks */,
-				A2DC3F2F2ED6823300ACC7B5 /* CurrencyDataSource in Frameworks */,
-				A2DC3F392ED6823300ACC7B5 /* ExchangeCalculator in Frameworks */,
-				A2DC3F372ED6823300ACC7B5 /* CurrencySelector in Frameworks */,
-				A2DC3F332ED6823300ACC7B5 /* CurrencySelectorDomain in Frameworks */,
+				A28513262ED793DD002C6E37 /* DomainLayer in Frameworks */,
+				A28513282ED793DD002C6E37 /* PresentationLayer in Frameworks */,
+				A28513242ED793DD002C6E37 /* DataLayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,10 +100,9 @@
 		A2D818332ED65C250020FB0C = {
 			isa = PBXGroup;
 			children = (
-				A2D818732ED665B00020FB0C /* Data */,
-				A2D818742ED665B00020FB0C /* Domain */,
-				A2D818752ED665B00020FB0C /* Presentation */,
-				A2D818762ED665B00020FB0C /* Shared */,
+				A2D818732ED665B00020FB0C /* DataLayer */,
+				A2D818742ED665B00020FB0C /* DomainLayer */,
+				A2D818752ED665B00020FB0C /* PresentationLayer */,
 				A2D8183E2ED65C250020FB0C /* CurrencyExchange */,
 				A2D8184C2ED65C480020FB0C /* CurrencyExchangeTests */,
 				A2D818562ED65C480020FB0C /* CurrencyExchangeUITests */,
@@ -158,13 +148,9 @@
 			);
 			name = CurrencyExchange;
 			packageProductDependencies = (
-				A2DC3F2E2ED6823300ACC7B5 /* CurrencyDataSource */,
-				A2DC3F302ED6823300ACC7B5 /* ExchangeRateDataSource */,
-				A2DC3F322ED6823300ACC7B5 /* CurrencySelectorDomain */,
-				A2DC3F342ED6823300ACC7B5 /* ExchangeCalculatorDomain */,
-				A2DC3F362ED6823300ACC7B5 /* CurrencySelector */,
-				A2DC3F382ED6823300ACC7B5 /* ExchangeCalculator */,
-				A2DC3F3A2ED6823300ACC7B5 /* Shared */,
+				A28513232ED793DD002C6E37 /* DataLayer */,
+				A28513252ED793DD002C6E37 /* DomainLayer */,
+				A28513272ED793DD002C6E37 /* PresentationLayer */,
 			);
 			productName = CurrencyExchange;
 			productReference = A2D8183C2ED65C250020FB0C /* CurrencyExchange.app */;
@@ -645,33 +631,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A2DC3F2E2ED6823300ACC7B5 /* CurrencyDataSource */ = {
+		A28513232ED793DD002C6E37 /* DataLayer */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = CurrencyDataSource;
+			productName = DataLayer;
 		};
-		A2DC3F302ED6823300ACC7B5 /* ExchangeRateDataSource */ = {
+		A28513252ED793DD002C6E37 /* DomainLayer */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ExchangeRateDataSource;
+			productName = DomainLayer;
 		};
-		A2DC3F322ED6823300ACC7B5 /* CurrencySelectorDomain */ = {
+		A28513272ED793DD002C6E37 /* PresentationLayer */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = CurrencySelectorDomain;
-		};
-		A2DC3F342ED6823300ACC7B5 /* ExchangeCalculatorDomain */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ExchangeCalculatorDomain;
-		};
-		A2DC3F362ED6823300ACC7B5 /* CurrencySelector */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CurrencySelector;
-		};
-		A2DC3F382ED6823300ACC7B5 /* ExchangeCalculator */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ExchangeCalculator;
-		};
-		A2DC3F3A2ED6823300ACC7B5 /* Shared */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Shared;
+			productName = PresentationLayer;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,8 +1,6 @@
 import SwiftUI
-import CurrencySelector
-import CurrencySelectorDomain
-import ExchangeCalculator
-import ExchangeCalculatorDomain
+import DomainLayer
+import PresentationLayer
 
 @main
 struct CurrencyExchangeApp: App {
