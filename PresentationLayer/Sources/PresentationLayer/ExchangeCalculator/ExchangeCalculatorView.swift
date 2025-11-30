@@ -10,6 +10,9 @@ public struct ExchangeCalculatorView: View {
 
     public var body: some View {
         Text("ExchangeCalculatorView")
+            .task {
+                await viewModel.fetchExchangeRates()
+            }
     }
 
 }

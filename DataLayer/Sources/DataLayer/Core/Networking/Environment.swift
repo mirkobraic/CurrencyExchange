@@ -7,7 +7,7 @@ enum Environment {
     var baseApiPath: String {
         switch self {
         case .dev:
-            "https://api.dolarapp.dev"
+            "api.dolarapp.dev"
         }
     }
 

@@ -1,4 +1,4 @@
-public protocol CurrencySelectorUseCaseProtocol: Actor {
+public protocol CurrenciesDataSource: Actor {
 
     func getAvailableCurrencies() async throws -> [String]
 
