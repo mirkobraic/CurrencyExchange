@@ -1,14 +1,10 @@
 import Observation
-import DomainLayer
+import FactoryKit
 
 @Observable @MainActor
 public class ExchangeCalculatorViewModel {
 
-    private let useCase: ExchangeCalculatorUseCaseProtocol
-
-    public init(useCase: ExchangeCalculatorUseCaseProtocol) {
-        self.useCase = useCase
-    }
+    @ObservationIgnored @Injected(\.exchangeCalculatorUseCase) private var useCase
 
     func fetchExchangeRates() async {
         do {

@@ -10,6 +10,7 @@
 		A28513242ED793DD002C6E37 /* DataLayer in Frameworks */ = {isa = PBXBuildFile; productRef = A28513232ED793DD002C6E37 /* DataLayer */; };
 		A28513262ED793DD002C6E37 /* DomainLayer in Frameworks */ = {isa = PBXBuildFile; productRef = A28513252ED793DD002C6E37 /* DomainLayer */; };
 		A28513282ED793DD002C6E37 /* PresentationLayer in Frameworks */ = {isa = PBXBuildFile; productRef = A28513272ED793DD002C6E37 /* PresentationLayer */; };
+		A2ABF8862EDCC3F400DD1E3C /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2ABF8852EDCC3F400DD1E3C /* FactoryKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 			files = (
 				A28513262ED793DD002C6E37 /* DomainLayer in Frameworks */,
 				A28513282ED793DD002C6E37 /* PresentationLayer in Frameworks */,
+				A2ABF8862EDCC3F400DD1E3C /* FactoryKit in Frameworks */,
 				A28513242ED793DD002C6E37 /* DataLayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +153,7 @@
 				A28513232ED793DD002C6E37 /* DataLayer */,
 				A28513252ED793DD002C6E37 /* DomainLayer */,
 				A28513272ED793DD002C6E37 /* PresentationLayer */,
+				A2ABF8852EDCC3F400DD1E3C /* FactoryKit */,
 			);
 			productName = CurrencyExchange;
 			productReference = A2D8183C2ED65C250020FB0C /* CurrencyExchange.app */;
@@ -234,6 +237,9 @@
 			);
 			mainGroup = A2D818332ED65C250020FB0C;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A2ABF8822EDCC3F400DD1E3C /* XCRemoteSwiftPackageReference "Factory" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A2D8183D2ED65C250020FB0C /* Products */;
 			projectDirPath = "";
@@ -636,6 +642,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A2ABF8822EDCC3F400DD1E3C /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Factory";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		A28513232ED793DD002C6E37 /* DataLayer */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -648,6 +665,11 @@
 		A28513272ED793DD002C6E37 /* PresentationLayer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PresentationLayer;
+		};
+		A2ABF8852EDCC3F400DD1E3C /* FactoryKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2ABF8822EDCC3F400DD1E3C /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = FactoryKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

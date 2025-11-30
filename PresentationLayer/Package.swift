@@ -14,12 +14,14 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "DomainLayer", path: "../DomainLayer"),
+        .package(url: "https://github.com/hmlongco/Factory", .upToNextMajor(from: "2.5.3")),
     ],
     targets: [
         .target(
             name: "PresentationLayer",
             dependencies: [
                 .product(name: "DomainLayer", package: "DomainLayer"),
+                .product(name: "Factory", package: "Factory"),
             ]
         ),
         .testTarget(

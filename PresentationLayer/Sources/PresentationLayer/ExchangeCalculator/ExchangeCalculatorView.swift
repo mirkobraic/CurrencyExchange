@@ -2,11 +2,9 @@ import SwiftUI
 
 public struct ExchangeCalculatorView: View {
 
-    var viewModel: ExchangeCalculatorViewModel
+    @State var viewModel = ExchangeCalculatorViewModel()
 
-    public init(viewModel: ExchangeCalculatorViewModel) {
-        self.viewModel = viewModel
-    }
+    public init() {}
 
     public var body: some View {
         Text("ExchangeCalculatorView")

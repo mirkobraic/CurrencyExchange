@@ -2,11 +2,9 @@ import SwiftUI
 
 public struct CurrencySelectorView: View {
 
-    var viewModel: CurrencySelectorViewModel
+    @State var viewModel = CurrencySelectorViewModel()
 
-    public init(viewModel: CurrencySelectorViewModel) {
-        self.viewModel = viewModel
-    }
+    public init() {}
 
     public var body: some View {
         Text("CurrencySelectorView")
