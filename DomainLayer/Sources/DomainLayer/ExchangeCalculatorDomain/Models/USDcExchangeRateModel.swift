@@ -14,21 +14,26 @@ public struct USDcExchangeRateModel: Sendable {
         self.date = date
     }
 
-    func buyUSDc(amount: Decimal) -> Decimal {
-        // implement transformation logic based on ask and bid values
-        0
+    public func calculateUSDcPrice(from tickerAmount: Decimal, action: ExchangeAction) -> Decimal {
+        switch action {
+        case .buying:
+            guard ask != 0 else { return 0 }
+
+            return tickerAmount / ask
+        case .selling:
+            guard bid != 0 else { return 0 }
+
+            return tickerAmount / bid
+        }
     }
 
-    func sellUSDc(amount: Decimal) -> Decimal {
-        0
-    }
-
-    func buy(amount: Decimal) -> Decimal {
-
-    }
-
-    func sell(amount: Decimal) -> Decimal {
-        
+    public func calculateTickerPrice(from usdcAmount: Decimal, action: ExchangeAction) -> Decimal {
+        switch action {
+        case .buying:
+            usdcAmount * bid
+        case .selling:
+            usdcAmount * ask
+        }
     }
 
 }
