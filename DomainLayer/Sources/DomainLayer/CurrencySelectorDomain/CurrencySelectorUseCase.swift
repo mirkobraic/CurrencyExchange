@@ -7,7 +7,17 @@ public actor CurrencySelectorUseCase: CurrencySelectorUseCaseProtocol {
     }
 
     public func getAvailableCurrencies() async throws -> [String] {
-        try await dataSource.getAvailableCurrencies()
+        do {
+            return try await dataSource.getAvailableCurrencies()
+        } catch {
+            return [
+                "MXN",
+                "ARS",
+                "BRL",
+                "COP",
+                "EURc",
+              ]
+        }
     }
 
 }

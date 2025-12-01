@@ -3,6 +3,8 @@ import SwiftUI
 public struct ExchangeCalculatorView: View {
 
     @State var viewModel = ExchangeCalculatorViewModel()
+    @State var presentingSheet = false
+    @State var selectedTicker = "MXN"
 
     public init() {}
 
@@ -18,9 +20,9 @@ public struct ExchangeCalculatorView: View {
         .padding(.horizontal, .doubleGutter)
         .padding(.top, .gutter(withMultiplier: 3))
         .maxSize()
-        .background(.background.secondary)
-        .task {
-            await viewModel.fetchExchangeRates()
+        .background(Color(.backgroundPrimary))
+        .sheet(isPresented: $presentingSheet) {
+            CurrencySelectorView(selectedTicker: $selectedTicker)
         }
     }
 
@@ -31,10 +33,11 @@ private extension ExchangeCalculatorView {
     var titleView: some View {
         VStack(alignment: .leading) {
             Text("Exchange calculator", bundle: #bundle)
-                .font(.largeTitle.bold())
+                .font(.header3)
+                .foregroundStyle(Color(.contentPrimary))
 
             Text("Subtitle")
-                .font(.title3.bold())
+                .font(.body)
                 .foregroundStyle(Color.accentColor)
         }
     }
@@ -43,10 +46,12 @@ private extension ExchangeCalculatorView {
         VStack(spacing: .doubleGutter) {
             AmountTextField(model: $viewModel.primaryInputModel) {
                 viewModel.tickerButtonTap()
+                presentingSheet = true
             }
 
             AmountTextField(model: $viewModel.secondaryInputModel) {
                 viewModel.tickerButtonTap()
+                presentingSheet = true
             }
         }
         .overlay {
@@ -64,7 +69,7 @@ private extension ExchangeCalculatorView {
         }
         .background {
             Circle()
-                .fill(.background.secondary)
+                .fill(Color(.backgroundPrimary))
                 .frame(width: 32, height: 32)
         }
     }

@@ -15,7 +15,7 @@ struct AmountTextField: View {
         .padding(.vertical, .gutter(withMultiplier: 3))
         .background(
             RoundedRectangle(cornerRadius: .doubleGutter)
-                .fill(.white)
+                .fill(Color(.backgroundSecondary))
         )
     }
 
@@ -34,7 +34,8 @@ private extension AmountTextField {
                     .clipShape(.circle)
 
                 Text(model.ticker)
-                    .fontWeight(.medium)
+                    .font(.body)
+                    .foregroundStyle(Color(.contentPrimary))
 
                 if model.supportsSelection {
                     Image(.chevronDown)
@@ -52,7 +53,8 @@ private extension AmountTextField {
         TextField("", value: $model.amount, format: .currency(code: "USD"))
             .keyboardType(.decimalPad)
             .multilineTextAlignment(.trailing)
-            .fontWeight(.semibold)
+            .font(.bodyBold)
+            .foregroundStyle(Color(.contentPrimary))
             .maxWidth(alignment: .trailing)
     }
 
