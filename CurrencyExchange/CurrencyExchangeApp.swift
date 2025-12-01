@@ -6,7 +6,9 @@ struct CurrencyExchangeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ExchangeCalculatorView()
+            NavigationStack {
+                ExchangeCalculatorView()
+            }
         }
     }
 
