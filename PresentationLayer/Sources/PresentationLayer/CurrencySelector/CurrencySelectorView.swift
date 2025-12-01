@@ -42,7 +42,7 @@ private extension CurrencySelectorView {
 
     var header: some View {
         HStack(spacing: .defaultGutter) {
-            Text("Choose currency")
+            Text("Choose currency", bundle: #bundle)
                 .font(.header4)
                 .foregroundStyle(Color(.contentPrimary))
                 .maxWidth(alignment: .leading)

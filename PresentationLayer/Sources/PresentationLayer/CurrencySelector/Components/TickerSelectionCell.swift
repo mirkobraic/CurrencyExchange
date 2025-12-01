@@ -26,6 +26,7 @@ struct TickerSelectionCell: View {
             Image(isSelected ? .radioSelected : .radioDeselected)
                 .resizable()
                 .frame(width: 24, height: 24)
+                .clipShape(.circle)
         }
         .padding(.vertical, .defaultGutter)
         .padding(.horizontal, .doubleGutter)

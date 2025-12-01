@@ -3,8 +3,6 @@ import SwiftUI
 public struct ExchangeCalculatorView: View {
 
     @State var viewModel = ExchangeCalculatorViewModel()
-    @State var presentingSheet = false
-    @State var selectedTicker = "MXN"
 
     public init() {}
 
@@ -21,11 +19,12 @@ public struct ExchangeCalculatorView: View {
         .padding(.top, .gutter(withMultiplier: 3))
         .maxSize()
         .background(Color(.backgroundPrimary))
-        .sheet(isPresented: $presentingSheet) {
-            CurrencySelectorView(selectedTicker: $selectedTicker)
-        }
-        .onChange(of: selectedTicker) { oldValue, newValue in
-            guard oldValue != newValue else { return }
+        .sheet(item: $viewModel.activeField) { activeField in
+            CurrencySelectorView(selectedTicker: Binding {
+                viewModel.getTicker(for: activeField)
+            } set: { newValue in
+                viewModel.setTicker(for: activeField, newValue: newValue)
+            })
         }
     }
 
@@ -39,7 +38,7 @@ private extension ExchangeCalculatorView {
                 .font(.header3)
                 .foregroundStyle(Color(.contentPrimary))
 
-            Text("Subtitle")
+            Text(viewModel.subtitleText ?? "")
                 .font(.body)
                 .foregroundStyle(Color.accentColor)
         }
@@ -48,13 +47,11 @@ private extension ExchangeCalculatorView {
     var exchangeView: some View {
         VStack(spacing: .doubleGutter) {
             AmountTextField(model: $viewModel.primaryInputModel) {
-                viewModel.tickerButtonTap()
-                presentingSheet = true
+                viewModel.tickerButtonTap(.primary)
             }
 
             AmountTextField(model: $viewModel.secondaryInputModel) {
-                viewModel.tickerButtonTap()
-                presentingSheet = true
+                viewModel.tickerButtonTap(.secondary)
             }
         }
         .overlay {
