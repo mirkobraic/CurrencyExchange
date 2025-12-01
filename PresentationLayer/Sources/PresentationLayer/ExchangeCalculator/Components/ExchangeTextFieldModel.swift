@@ -1,6 +1,6 @@
 import Foundation
 
-struct AmountTextFieldModel {
+struct ExchangeTextFieldModel {
 
     var ticker: String
     var amount: Decimal?

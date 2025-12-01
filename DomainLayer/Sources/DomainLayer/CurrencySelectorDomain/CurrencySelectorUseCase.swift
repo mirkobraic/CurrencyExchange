@@ -1,8 +1,8 @@
 public actor CurrencySelectorUseCase: CurrencySelectorUseCaseProtocol {
 
-    private let dataSource: CurrenciesDataSource
+    private let dataSource: CurrencyListDataSource
 
-    public init(dataSource: CurrenciesDataSource) {
+    public init(dataSource: CurrencyListDataSource) {
         self.dataSource = dataSource
     }
 

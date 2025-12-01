@@ -1,6 +1,6 @@
 import DomainLayer
 
-public actor CurrenciesClient: CurrenciesDataSource {
+public actor CurrencyListClient: CurrencyListDataSource {
 
     private let apiClient: APIClientProtocol
 

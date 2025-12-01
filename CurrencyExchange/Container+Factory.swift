@@ -10,8 +10,8 @@ extension Container {
         self { APIClient() }
     }
 
-    private var currenciesClient: Factory<CurrenciesDataSource> {
-        self { CurrenciesClient(apiClient: self.apiClient()) }
+    private var currencyListClient: Factory<CurrencyListDataSource> {
+        self { CurrencyListClient(apiClient: self.apiClient()) }
     }
 
     private var exchangeRateClient: Factory<ExchangeRateClient> {
@@ -24,7 +24,7 @@ extension Container {
 extension Container: @retroactive AutoRegistering {
 
     public func autoRegister() {
-        currencySelectorUseCase.register { CurrencySelectorUseCase(dataSource: self.currenciesClient()) }
+        currencySelectorUseCase.register { CurrencySelectorUseCase(dataSource: self.currencyListClient()) }
         exchangeCalculatorUseCase.register { ExchangeCalculatorUseCase(dataSource: self.exchangeRateClient()) }
     }
 

@@ -13,7 +13,7 @@ public struct CurrencySelectorView: View {
                 .padding(.top, .defaultGutter)
 
             LoadableShimmerView(viewModel.viewState) { model in
-                tickerList(model)
+                currencyList(model)
             } emptyView: {
                 EmptyView()
             } errorView: {
@@ -51,14 +51,14 @@ private extension CurrencySelectorView {
         }
     }
 
-    func tickerList(_ tickers: [TickerSelectionModel]) -> some View {
+    func currencyList(_ currencies: [CurrencySelectionModel]) -> some View {
         ScrollView {
             VStack(spacing: 0) {
-                ForEach(tickers, id: \.value) { ticker in
+                ForEach(currencies, id: \.ticker) { currency in
                     Button {
-                        selectedTicker = ticker.value
+                        selectedTicker = currency.ticker
                     } label: {
-                        TickerSelectionCell(ticker: ticker, isSelected: ticker.value == selectedTicker)
+                        CurrencySelectionCell(model: currency, isSelected: currency.ticker == selectedTicker)
                     }
                 }
             }

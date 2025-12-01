@@ -1,4 +1,4 @@
-extension CurrenciesClient {
+extension CurrencyListClient {
 
     enum Endpoint: APIEndpoint {
 

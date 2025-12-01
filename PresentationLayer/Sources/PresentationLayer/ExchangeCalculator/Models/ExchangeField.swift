@@ -1,4 +1,4 @@
-enum ActiveField: Identifiable {
+enum ExchangeField: Identifiable {
 
     case primary
     case secondary

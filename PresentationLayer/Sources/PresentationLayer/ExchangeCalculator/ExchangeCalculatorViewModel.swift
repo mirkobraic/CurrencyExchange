@@ -7,9 +7,9 @@ public class ExchangeCalculatorViewModel {
 
     @ObservationIgnored @Injected(\.exchangeCalculatorUseCase) private var useCase
 
-    var activeField: ActiveField?
-    var primaryInputModel: AmountTextFieldModel
-    var secondaryInputModel: AmountTextFieldModel
+    var activeField: ExchangeField?
+    var primaryInputField: ExchangeTextFieldModel
+    var secondaryInputField: ExchangeTextFieldModel
 
     private var exchangeRate: ExchangeRate?
 
@@ -21,8 +21,8 @@ public class ExchangeCalculatorViewModel {
 
     init() {
         activeField = nil
-        primaryInputModel = AmountTextFieldModel(ticker: "USDc", amount: nil, supportsSelection: false)
-        secondaryInputModel = AmountTextFieldModel(ticker: "MXN", amount: nil, supportsSelection: true)
+        primaryInputField = ExchangeTextFieldModel(ticker: "USDc", amount: nil, supportsSelection: false)
+        secondaryInputField = ExchangeTextFieldModel(ticker: "MXN", amount: nil, supportsSelection: true)
     }
 
     func fetchExchangeRates() async {
@@ -39,32 +39,32 @@ public class ExchangeCalculatorViewModel {
 extension ExchangeCalculatorViewModel {
 
     func switchCurrenciesButtonTap() {
-        let temp = primaryInputModel
-        primaryInputModel = secondaryInputModel
-        secondaryInputModel = temp
+        let temp = primaryInputField
+        primaryInputField = secondaryInputField
+        secondaryInputField = temp
     }
 
-    func tickerButtonTap(_ field: ActiveField) {
+    func tickerButtonTap(_ field: ExchangeField) {
         activeField = field
     }
 
-    func getTicker(for field: ActiveField) -> String {
+    func getTicker(for field: ExchangeField) -> String {
         switch field {
         case .primary:
-            primaryInputModel.ticker
+            primaryInputField.ticker
         case .secondary:
-            secondaryInputModel.ticker
+            secondaryInputField.ticker
         }
     }
 
-    func setTicker(for field: ActiveField, newValue: String) {
+    func setTicker(for field: ExchangeField, newValue: String) {
         guard newValue != getTicker(for: field) else { return }
 
         switch field {
         case .primary:
-            primaryInputModel.ticker = newValue
+            primaryInputField.ticker = newValue
         case .secondary:
-            secondaryInputModel.ticker = newValue
+            secondaryInputField.ticker = newValue
         }
 
         activeField = nil

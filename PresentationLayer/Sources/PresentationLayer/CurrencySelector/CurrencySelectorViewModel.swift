@@ -6,15 +6,15 @@ public class CurrencySelectorViewModel {
 
     @ObservationIgnored @Injected(\.currencySelectorUseCase) private var useCase
 
-    var viewState: Loadable<[TickerSelectionModel]> = .initial(placeholder: .placeholder)
+    var viewState: Loadable<[CurrencySelectionModel]> = .initial(placeholder: .placeholder)
 
     func fetchTickers() async {
         do {
-            let tickers = try await useCase.getAvailableCurrencies()
-                .map { TickerSelectionModel(value: $0, imageName: $0) }
+            let currencies = try await useCase.getAvailableCurrencies()
+                .map { CurrencySelectionModel(ticker: $0, imageName: $0) }
 
             withAnimation {
-                viewState = tickers.isEmpty ? .empty : .loaded(tickers)
+                viewState = currencies.isEmpty ? .empty : .loaded(currencies)
             }
         } catch {
             withAnimation {

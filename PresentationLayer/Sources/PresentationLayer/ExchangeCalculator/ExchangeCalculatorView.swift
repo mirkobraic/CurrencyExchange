@@ -3,6 +3,7 @@ import SwiftUI
 public struct ExchangeCalculatorView: View {
 
     @State var viewModel = ExchangeCalculatorViewModel()
+    @FocusState private var focusedField: ExchangeField?
 
     public init() {}
 
@@ -19,6 +20,7 @@ public struct ExchangeCalculatorView: View {
         .padding(.top, .gutter(withMultiplier: 3))
         .maxSize()
         .background(Color(.backgroundPrimary))
+        .onTapGesture { focusedField = nil }
         .sheet(item: $viewModel.activeField) { activeField in
             CurrencySelectorView(selectedTicker: Binding {
                 viewModel.getTicker(for: activeField)
@@ -46,13 +48,15 @@ private extension ExchangeCalculatorView {
 
     var exchangeView: some View {
         VStack(spacing: .doubleGutter) {
-            AmountTextField(model: $viewModel.primaryInputModel) {
+            ExchangeTextField(model: $viewModel.primaryInputField) {
                 viewModel.tickerButtonTap(.primary)
             }
+            .focused($focusedField, equals: .primary)
 
-            AmountTextField(model: $viewModel.secondaryInputModel) {
+            ExchangeTextField(model: $viewModel.secondaryInputField) {
                 viewModel.tickerButtonTap(.secondary)
             }
+            .focused($focusedField, equals: .secondary)
         }
         .overlay {
             switchCurrenciesButton

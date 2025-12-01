@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct TickerSelectionCell: View {
+struct CurrencySelectionCell: View {
 
-    let ticker: TickerSelectionModel
+    let model: CurrencySelectionModel
     let isSelected: Bool
 
     var body: some View {
@@ -12,13 +12,13 @@ struct TickerSelectionCell: View {
                     .fill(Color(.backgroundPrimary))
                     .frame(width: 40, height: 40)
 
-                Image(ticker.imageName, bundle: #bundle)
+                Image(model.imageName, bundle: #bundle)
                     .resizable()
                     .frame(width: 28, height: 28)
                     .clipShape(.circle)
             }
 
-            Text(ticker.value)
+            Text(model.ticker)
                 .font(.body)
                 .foregroundStyle(Color(.contentPrimary))
                 .maxWidth(alignment: .leading)

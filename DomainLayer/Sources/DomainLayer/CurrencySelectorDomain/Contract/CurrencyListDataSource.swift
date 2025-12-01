@@ -1,4 +1,4 @@
-public protocol CurrenciesDataSource: Actor {
+public protocol CurrencyListDataSource: Actor {
 
     func getAvailableCurrencies() async throws -> [String]
 

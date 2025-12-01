@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct AmountTextField: View {
+struct ExchangeTextField: View {
 
-    @Binding var model: AmountTextFieldModel
+    @Binding var model: ExchangeTextFieldModel
     let onTickerTap: (() -> Void)?
 
     var body: some View {
@@ -21,7 +21,7 @@ struct AmountTextField: View {
 
 }
 
-private extension AmountTextField {
+private extension ExchangeTextField {
 
     var tickerButton: some View {
         Button {
