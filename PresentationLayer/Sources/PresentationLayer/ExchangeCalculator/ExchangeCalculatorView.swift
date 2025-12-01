@@ -24,6 +24,9 @@ public struct ExchangeCalculatorView: View {
         .sheet(isPresented: $presentingSheet) {
             CurrencySelectorView(selectedTicker: $selectedTicker)
         }
+        .onChange(of: selectedTicker) { oldValue, newValue in
+            guard oldValue != newValue else { return }
+        }
     }
 
 }

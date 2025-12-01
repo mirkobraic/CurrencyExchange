@@ -1,4 +1,4 @@
-import Observation
+import SwiftUI
 import FactoryKit
 
 @Observable @MainActor
@@ -6,13 +6,20 @@ public class CurrencySelectorViewModel {
 
     @ObservationIgnored @Injected(\.currencySelectorUseCase) private var useCase
 
-    var tickers: [String] = []
+    var viewState: Loadable<[TickerSelectionModel]> = .initial(placeholder: .placeholder)
 
     func fetchTickers() async {
         do {
-            tickers = try await useCase.getAvailableCurrencies()
+            let tickers = try await useCase.getAvailableCurrencies()
+                .map { TickerSelectionModel(value: $0, imageName: $0) }
+
+            withAnimation {
+                viewState = tickers.isEmpty ? .empty : .loaded(tickers)
+            }
         } catch {
-            print(error)
+            withAnimation {
+                viewState = .error
+            }
         }
     }
 
