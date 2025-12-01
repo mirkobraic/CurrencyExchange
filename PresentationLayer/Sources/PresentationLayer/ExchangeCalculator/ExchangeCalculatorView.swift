@@ -21,13 +21,14 @@ public struct ExchangeCalculatorView: View {
         .maxSize()
         .background(Color(.backgroundPrimary))
         .onTapGesture { focusedField = nil }
-        .sheet(item: $viewModel.activeField) { activeField in
+        .sheet(item: $viewModel.currencySelectionActiveField) { activeField in
             CurrencySelectorView(selectedTicker: Binding {
                 viewModel.getTicker(for: activeField)
             } set: { newValue in
                 viewModel.setTicker(for: activeField, newValue: newValue)
             })
         }
+        .task { await viewModel.viewAppearedTask() }
     }
 
 }
@@ -35,12 +36,12 @@ public struct ExchangeCalculatorView: View {
 private extension ExchangeCalculatorView {
 
     var titleView: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: .defaultGutter) {
             Text("Exchange calculator", bundle: #bundle)
                 .font(.header3)
                 .foregroundStyle(Color(.contentPrimary))
 
-            Text(viewModel.subtitleText ?? "")
+            Text(viewModel.subtitleText ?? " ")
                 .font(.body)
                 .foregroundStyle(Color.accentColor)
         }
@@ -52,11 +53,27 @@ private extension ExchangeCalculatorView {
                 viewModel.tickerButtonTap(.primary)
             }
             .focused($focusedField, equals: .primary)
+            .onChange(of: viewModel.primaryInputField.amount) { oldValue, newValue in
+                guard
+                    oldValue != newValue,
+                    focusedField == .primary
+                else { return }
+
+                viewModel.amountUpdated(for: .primary, amount: newValue)
+            }
 
             ExchangeTextField(model: $viewModel.secondaryInputField) {
                 viewModel.tickerButtonTap(.secondary)
             }
             .focused($focusedField, equals: .secondary)
+            .onChange(of: viewModel.secondaryInputField.amount) { oldValue, newValue in
+                guard
+                    oldValue != newValue,
+                    focusedField == .secondary
+                else { return }
+
+                viewModel.amountUpdated(for: .secondary, amount: newValue)
+            }
         }
         .overlay {
             switchCurrenciesButton
