@@ -25,9 +25,9 @@ public class ExchangeCalculatorViewModel {
         secondaryInputField = ExchangeTextFieldModel(ticker: "MXN", amount: nil, supportsSelection: true)
     }
 
-    func calculateExchangeRate(for ticker: String, action: ExchangeAction) async {
+    func fetchExchangeRate(for ticker: String) async {
         do {
-            let model = try await useCase.getUSDcExchangeRate(for: ticker, action: action)
+            let model = try await useCase.getUSDcExchangeRate(for: ticker)
         } catch {
             print(error)
         }
@@ -68,13 +68,7 @@ extension ExchangeCalculatorViewModel {
 
         activeField = nil
         Task {
-            let action = switch field {
-            case .primary:
-                ExchangeAction.selling
-            case .secondary:
-                ExchangeAction.buying
-            }
-            await calculateExchangeRate(for: newValue, action: action)
+            await fetchExchangeRate(for: newValue)
         }
     }
 

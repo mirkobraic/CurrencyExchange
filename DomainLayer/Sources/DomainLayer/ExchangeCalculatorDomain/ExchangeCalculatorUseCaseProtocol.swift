@@ -1,7 +1,7 @@
-import Foundation
-
 public protocol ExchangeCalculatorUseCaseProtocol: Actor {
 
-    func getUSDcExchangeRate(for ticker: String, action: ExchangeAction) async throws -> Decimal
+    func getUSDcExchangeRates(for tickers: [String]) async throws -> [USDcExchangeRateModel]
+
+    func getUSDcExchangeRate(for ticker: String) async throws -> USDcExchangeRateModel
 
 }
