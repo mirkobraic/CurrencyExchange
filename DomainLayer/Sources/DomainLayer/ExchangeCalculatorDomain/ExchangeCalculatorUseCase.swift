@@ -1,3 +1,5 @@
+import Foundation
+
 public actor ExchangeCalculatorUseCase: ExchangeCalculatorUseCaseProtocol {
 
     private let dataSource: ExchangeRateDataSource
@@ -6,8 +8,19 @@ public actor ExchangeCalculatorUseCase: ExchangeCalculatorUseCaseProtocol {
         self.dataSource = dataSource
     }
 
-    public func getExchangeRates(for tickers: [String]) async throws -> [ExchangeRateModel] {
-        try await dataSource.getExchangeRates(for: tickers)
+    public func getUSDcExchangeRate(for ticker: String, action: ExchangeAction) async throws -> Decimal {
+        let exchangeRates = try await dataSource.getUSDcExchangeRates(for: [ticker])
+
+        guard let requestedExchangeRate = exchangeRates.first else {
+            throw ExchangeRateError.rateNotFound
+        }
+
+        return switch action {
+        case .buying:
+            requestedExchangeRate.bid
+        case .selling:
+            requestedExchangeRate.ask
+        }
     }
 
 }

@@ -8,6 +8,10 @@ struct ExchangeRateResponse: Decodable {
     let book: String
     let date: Date
 
+}
+
+extension ExchangeRateResponse {
+
     func toDomainModel() -> ExchangeRateModel? {
         guard
             let ask = Decimal(string: ask),
