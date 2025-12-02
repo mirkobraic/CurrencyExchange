@@ -1,4 +1,4 @@
-enum ExchangeInput: Identifiable {
+enum ExchangeEditorInputType: Identifiable {
 
     case primary
     case secondary

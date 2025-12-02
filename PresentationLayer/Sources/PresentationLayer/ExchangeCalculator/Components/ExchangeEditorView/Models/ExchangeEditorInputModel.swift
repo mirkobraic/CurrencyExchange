@@ -1,6 +1,6 @@
 import DomainLayer
 
-struct ExchangeInputModel {
+struct ExchangeEditorInputModel {
 
     var field: ExchangeTextFieldModel
     let exchangeAction: ExchangeAction

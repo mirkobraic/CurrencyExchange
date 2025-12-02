@@ -12,9 +12,14 @@ struct ExchangeTextFieldModel {
 extension ExchangeTextFieldModel {
 
     var isUSDc: Bool {
-        ticker == "USDc"
+        ticker == Constants.usdcTicker
     }
 
-    static let USDc = ExchangeTextFieldModel(ticker: "USDc", imageName: "USDc", amount: 0, supportsSelection: false)
+    static let USDc = ExchangeTextFieldModel(
+        ticker: Constants.usdcTicker,
+        imageName: Constants.usdcTicker,
+        amount: 0,
+        supportsSelection: false
+    )
 
 }

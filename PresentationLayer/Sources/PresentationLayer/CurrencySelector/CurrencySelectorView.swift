@@ -2,8 +2,8 @@ import SwiftUI
 
 public struct CurrencySelectorView: View {
 
-    @State var viewModel = CurrencySelectorViewModel()
     @Binding var selectedTicker: String
+    @State private var viewModel = CurrencySelectorViewModel()
 
     public var body: some View {
         VStack(spacing: .doubleGutter) {

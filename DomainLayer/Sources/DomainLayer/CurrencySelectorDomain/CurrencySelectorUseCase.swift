@@ -4,7 +4,7 @@ public actor CurrencySelectorUseCase: CurrencySelectorUseCaseProtocol {
 
     private var currencyListCache: [String]?
 
-    // todo: placeholder currencies should be loaded from local storage.
+    // TODO: Placeholder currencies should be loaded from local storage.
     private let placholderCurrencies = [
         "MXN",
         "ARS",
@@ -18,7 +18,7 @@ public actor CurrencySelectorUseCase: CurrencySelectorUseCaseProtocol {
     }
 
     public func getAvailableCurrencies() async throws -> [String] {
-        // todo: implement cache invalidation mechanism
+        // TODO: Implement cache invalidation mechanism
         if let currencyListCache { return currencyListCache }
 
         do {
