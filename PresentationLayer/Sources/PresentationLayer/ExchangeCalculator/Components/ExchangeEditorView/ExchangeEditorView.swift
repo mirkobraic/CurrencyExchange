@@ -4,7 +4,8 @@ struct ExchangeEditorView: View {
 
     @FocusState private var focusedField: ExchangeEditorInputType?
     @Bindable var viewModel: ExchangeEditorViewModel
-    let currencySelectedCallback: (ExchangeEditorInputType) -> Void
+    var currencySelectedCallback: ((ExchangeEditorInputType) -> Void)?
+    var currenciesSwitchedCallback: (() -> Void)?
 
     var body: some View {
         VStack(spacing: .doubleGutter) {
@@ -22,12 +23,12 @@ private extension ExchangeEditorView {
 
     var buyingField: some View {
         ExchangeTextField(model: $viewModel.primaryInput.field) {
-            currencySelectedCallback(.primary)
+            currencySelectedCallback?(.primary)
         }
         .focused($focusedField, equals: .primary)
         .onChange(of: viewModel.primaryInput.field.amount) { oldValue, newValue in
             guard
-                oldValue != newValue,
+                oldValue.roundedAsCurrency != newValue.roundedAsCurrency,
                 focusedField == .primary
             else { return }
 
@@ -37,12 +38,12 @@ private extension ExchangeEditorView {
 
     var sellingField: some View {
         ExchangeTextField(model: $viewModel.secondaryInput.field) {
-            currencySelectedCallback(.secondary)
+            currencySelectedCallback?(.secondary)
         }
         .focused($focusedField, equals: .secondary)
         .onChange(of: viewModel.secondaryInput.field.amount) { oldValue, newValue in
             guard
-                oldValue != newValue,
+                oldValue.roundedAsCurrency != newValue.roundedAsCurrency,
                 focusedField == .secondary
             else { return }
 
@@ -54,6 +55,7 @@ private extension ExchangeEditorView {
         Button {
             viewModel.switchCurrenciesButtonTap()
             switchFocusedField()
+            currenciesSwitchedCallback?()
         } label: {
             Image(.arrowDown)
                 .resizable()
@@ -77,5 +79,22 @@ private extension ExchangeEditorView {
         }
     }
 
+}
+
+extension ExchangeEditorView {
+
+    func onCurrencyTap(_ callback: @escaping (ExchangeEditorInputType) -> Void) -> ExchangeEditorView {
+        var view = self
+        view.currencySelectedCallback = callback
+
+        return view
+    }
+
+    func onSwitchCurrencies(_ callback: @escaping () -> Void) -> ExchangeEditorView {
+        var view = self
+        view.currenciesSwitchedCallback = callback
+
+        return view
+    }
 
 }

@@ -20,4 +20,12 @@ extension Decimal {
         return formatter.string(for: self) ?? self.description
     }
 
+    var roundedAsCurrency: Self {
+        var value = self
+        var result = Decimal()
+        NSDecimalRound(&result, &value, 2, .plain)
+
+        return result
+    }
+
 }

@@ -35,10 +35,10 @@ public class ExchangeCalculatorViewModel {
     private func updateViewModel(with exchangeRate: USDcExchangeRateModel) {
         self.exchangeRate = exchangeRate
         exchangeEditorViewModel.update(exchangeRate: exchangeRate)
-        subtitleText = .loaded(subtitleText(for: exchangeRate))
+        updateSubtitleText(for: exchangeRate)
     }
 
-    private func subtitleText(for exchangeRate: USDcExchangeRateModel) -> String {
+    private func updateSubtitleText(for exchangeRate: USDcExchangeRateModel) {
         let usdcAmount = Decimal(1)
         // TODO: Non-ideal solution.
         let nonUSDcInput = exchangeEditorViewModel.secondaryInput.field.isUSDc ?
@@ -48,11 +48,13 @@ public class ExchangeCalculatorViewModel {
         let ticker = nonUSDcInput.field.ticker
         let rate = exchangeRate.calculateTickerPrice(from: usdcAmount, action: nonUSDcInput.exchangeAction)
 
-        return String(
+        let subtitle = String(
             format: "%@ = %@",
             usdcAmount.asCurrency(currencySymbol: Constants.usdcTicker),
             rate.asCurrency(currencySymbol: ticker)
         )
+
+        subtitleText = .loaded(subtitle)
     }
 
 }
@@ -65,6 +67,12 @@ extension ExchangeCalculatorViewModel {
 
     func tickerButtonTap(_ field: ExchangeEditorInputType) {
         currencySelectionActiveInput = field
+    }
+
+    func currenciesSwitched() {
+        guard let exchangeRate else { return }
+
+        updateSubtitleText(for: exchangeRate)
     }
 
     func getTicker(for field: ExchangeEditorInputType) -> String {

@@ -12,16 +12,16 @@ public struct ExchangeCalculatorView: View {
 
             headerView
 
-            ExchangeEditorView(viewModel: viewModel.exchangeEditorViewModel) {
-                viewModel.tickerButtonTap($0)
-            }
-            .maxHeight(alignment: .top)
-
+            ExchangeEditorView(viewModel: viewModel.exchangeEditorViewModel)
+                .onCurrencyTap { viewModel.tickerButtonTap($0) }
+                .onSwitchCurrencies { viewModel.currenciesSwitched() }
+                .maxHeight(alignment: .top)
         }
         .padding(.horizontal, .doubleGutter)
         .padding(.top, .gutter(withMultiplier: 3))
         .maxSize()
         .background(Color(.backgroundPrimary))
+        .onTapHideKeyboard()
         .sheet(item: $viewModel.currencySelectionActiveInput) { activeField in
             CurrencySelectorView(selectedTicker: Binding {
                 viewModel.getTicker(for: activeField)

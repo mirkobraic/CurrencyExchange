@@ -52,7 +52,7 @@ private extension ExchangeTextField {
     }
 
     var inputField: some View {
-        TextField("", value: $model.amount, format: .customCurrency(symbol: "$", maxValue: 999_999_999.99))
+        TextField("", value: $model.amount, format: .customCurrency(symbol: "$", maxValue: Constants.currencyMax))
             .keyboardType(.decimalPad)
             .multilineTextAlignment(.trailing)
             .font(.bodyBold)
