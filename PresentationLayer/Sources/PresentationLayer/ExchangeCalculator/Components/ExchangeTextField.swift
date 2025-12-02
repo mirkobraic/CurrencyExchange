@@ -28,10 +28,12 @@ private extension ExchangeTextField {
             onTickerTap?()
         } label: {
             HStack(spacing: .defaultGutter) {
-                Image(model.ticker, bundle: #bundle)
-                    .resizable()
-                    .frame(width: 16, height: 16)
-                    .clipShape(.circle)
+                if let image = model.imageName {
+                    Image(image, bundle: #bundle)
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                        .clipShape(.circle)
+                }
 
                 Text(model.ticker)
                     .font(.body)

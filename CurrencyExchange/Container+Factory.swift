@@ -8,14 +8,17 @@ extension Container {
 
     private var apiClient: Factory<APIClientProtocol> {
         self { APIClient() }
+            .singleton
     }
 
     private var currencyListClient: Factory<CurrencyListDataSource> {
         self { CurrencyListClient(apiClient: self.apiClient()) }
+            .singleton
     }
 
     private var exchangeRateClient: Factory<ExchangeRateClient> {
         self { ExchangeRateClient(apiClient: self.apiClient()) }
+            .singleton
     }
 
 }

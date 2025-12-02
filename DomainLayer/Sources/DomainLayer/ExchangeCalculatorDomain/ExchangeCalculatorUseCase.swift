@@ -20,4 +20,9 @@ public actor ExchangeCalculatorUseCase: ExchangeCalculatorUseCaseProtocol {
         return requestedExchangeRate
     }
 
+    public func getUSDcExchangeRateStream(for ticker: String) async throws -> AsyncStream<USDcExchangeRateModel> {
+        // todo: AsyncStream (or Combine) should be used to ensure we don't have stale exchange rates.
+        fatalError("Unimplemented")
+    }
+
 }

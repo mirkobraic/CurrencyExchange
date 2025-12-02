@@ -11,7 +11,7 @@ public struct ExchangeCalculatorView: View {
         VStack(alignment: .leading, spacing: .gutter(withMultiplier: 3)) {
             Spacer(minLength: 50)
 
-            titleView
+            headerView
 
             exchangeView
                 .maxHeight(alignment: .top)
@@ -35,15 +35,28 @@ public struct ExchangeCalculatorView: View {
 
 private extension ExchangeCalculatorView {
 
-    var titleView: some View {
+    var headerView: some View {
         VStack(alignment: .leading, spacing: .defaultGutter) {
             Text("Exchange calculator", bundle: #bundle)
                 .font(.header3)
                 .foregroundStyle(Color(.contentPrimary))
 
-            Text(viewModel.subtitleText ?? " ")
+            subtitleView
+        }
+    }
+
+    var subtitleView: some View {
+        LoadableShimmerView(viewModel.subtitleText) { text in
+            Text(text)
                 .font(.body)
                 .foregroundStyle(Color.accentColor)
+        } emptyView: {
+            Text(" ")
+                .font(.body)
+        } errorView: {
+            Text("Unable to load exchange rates.", bundle: #bundle)
+                .font(.body)
+                .foregroundStyle(Color.red)
         }
     }
 

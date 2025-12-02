@@ -9,22 +9,28 @@ public class ExchangeCalculatorViewModel {
     @ObservationIgnored @Injected(\.exchangeCalculatorUseCase) private var useCase
 
     var primaryInput = ExchangeInputModel(field: .USDc, exchangeAction: .selling)
+    // todo: Ticker value should be loaded from storage (user defaults, for example)
     var secondaryInput = ExchangeInputModel(
-        field: .init(ticker: "MXN", amount: 0, supportsSelection: true),
+        field: .init(ticker: "MXN", imageName: "MXN", amount: 0, supportsSelection: true),
         exchangeAction: .buying
     )
 
     var currencySelectionActiveInput: ExchangeInput?
-    var subtitleText: String?
+    var subtitleText: Loadable<String> = .initial(placeholder: "Placeholder string")
 
     private var exchangeRate: USDcExchangeRateModel?
 
     private func fetchExchangeRate(for ticker: String) async {
+        guard !ticker.isEmpty else {
+            subtitleText = .empty
+            return
+        }
+
         do {
             let model = try await useCase.getUSDcExchangeRate(for: ticker)
             updateViewModel(with: model)
         } catch {
-            print(error)
+            subtitleText = .error
         }
     }
 
@@ -38,15 +44,16 @@ public class ExchangeCalculatorViewModel {
             update(input: &primaryInput, with: secondaryInput.field.amount, exchangeRate: exchangeRate)
         }
 
-        subtitleText = subtitleText(for: exchangeRate)
+        subtitleText = .loaded(subtitleText(for: exchangeRate))
     }
 
     private func subtitleText(for exchangeRate: USDcExchangeRateModel) -> String {
+        let usdcAmount = Decimal(1)
         let nonUSDcInput = secondaryInput.field.isUSDc ? primaryInput : secondaryInput
         let ticker = nonUSDcInput.field.ticker
-        let rate = exchangeRate.calculateTickerPrice(from: 1, action: nonUSDcInput.exchangeAction)
+        let rate = exchangeRate.calculateTickerPrice(from: usdcAmount, action: nonUSDcInput.exchangeAction)
 
-        return String("1 USDc = \(rate) \(ticker)")
+        return String("\(usdcAmount.asCurrency(currencySymbol: "USDc")) = \(rate.asCurrency(currencySymbol: ticker))")
     }
 
     private func update(
@@ -107,8 +114,10 @@ extension ExchangeCalculatorViewModel {
         switch field {
         case .primary:
             primaryInput.field.ticker = newValue
+            primaryInput.field.imageName = newValue
         case .secondary:
             secondaryInput.field.ticker = newValue
+            secondaryInput.field.imageName = newValue
         }
 
         currencySelectionActiveInput = nil
