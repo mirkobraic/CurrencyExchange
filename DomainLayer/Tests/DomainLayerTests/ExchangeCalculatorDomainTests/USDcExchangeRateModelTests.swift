@@ -35,12 +35,12 @@ struct USDcExchangeRateModelTests {
     }
 
     @Test
-    func `Calculate ticker price uses ask when buying`() {
+    func `Calculate ticker price uses bid when buying`() {
         let model = exchangeRateModelInstance()
         let usdcAmount = Decimal(10)
 
         let tickerPrice = model.calculateTickerPrice(from: usdcAmount, action: .buying)
-        let expected = Decimal(20)
+        let expected = Decimal(30)
 
         #expect(tickerPrice == expected)
     }
@@ -51,7 +51,7 @@ struct USDcExchangeRateModelTests {
         let usdcAmount = Decimal(10)
 
         let tickerPrice = model.calculateTickerPrice(from: usdcAmount, action: .selling)
-        let expected = Decimal(30)
+        let expected = Decimal(20)
 
         #expect(tickerPrice == expected)
     }
@@ -84,7 +84,7 @@ struct USDcExchangeRateModelTests {
         let originalTickerAmount = Decimal(12)
 
         let usdcPrice = model.calculateUSDcPrice(from: originalTickerAmount, action: .buying)
-        let tickerBackAmount = model.calculateTickerPrice(from: usdcPrice, action: .selling)
+        let tickerBackAmount = model.calculateTickerPrice(from: usdcPrice, action: .buying)
 
         #expect(originalTickerAmount == tickerBackAmount)
     }
@@ -95,7 +95,7 @@ struct USDcExchangeRateModelTests {
         let originalTickerAmount = Decimal(12)
 
         let usdcPrice = model.calculateUSDcPrice(from: originalTickerAmount, action: .selling)
-        let tickerBackAmount = model.calculateTickerPrice(from: usdcPrice, action: .buying)
+        let tickerBackAmount = model.calculateTickerPrice(from: usdcPrice, action: .selling)
 
         #expect(originalTickerAmount == tickerBackAmount)
     }
@@ -106,7 +106,7 @@ struct USDcExchangeRateModelTests {
         let originalUSDcAmount = Decimal(12)
 
         let tickerPrice = model.calculateTickerPrice(from: originalUSDcAmount, action: .buying)
-        let usdcBackAmount = model.calculateUSDcPrice(from: tickerPrice, action: .selling)
+        let usdcBackAmount = model.calculateUSDcPrice(from: tickerPrice, action: .buying)
 
         #expect(originalUSDcAmount == usdcBackAmount)
     }
@@ -117,7 +117,7 @@ struct USDcExchangeRateModelTests {
         let originalUSDcAmount = Decimal(12)
 
         let tickerPrice = model.calculateTickerPrice(from: originalUSDcAmount, action: .selling)
-        let usdcBackAmount = model.calculateUSDcPrice(from: tickerPrice, action: .buying)
+        let usdcBackAmount = model.calculateUSDcPrice(from: tickerPrice, action: .selling)
 
         #expect(originalUSDcAmount == usdcBackAmount)
     }

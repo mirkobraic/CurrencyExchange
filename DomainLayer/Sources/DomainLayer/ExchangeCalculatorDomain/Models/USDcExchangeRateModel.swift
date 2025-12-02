@@ -30,9 +30,9 @@ public struct USDcExchangeRateModel: Sendable {
     public func calculateTickerPrice(from usdcAmount: Decimal, action: ExchangeAction) -> Decimal {
         switch action {
         case .buying:
-            usdcAmount * bid
-        case .selling:
             usdcAmount * ask
+        case .selling:
+            usdcAmount * bid
         }
     }
 

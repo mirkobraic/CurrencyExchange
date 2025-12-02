@@ -8,10 +8,13 @@ public class ExchangeCalculatorViewModel {
 
     @ObservationIgnored @Injected(\.exchangeCalculatorUseCase) private var useCase
 
-    var primaryInputField = ExchangeTextFieldModel.USDc
-    var secondaryInputField = ExchangeTextFieldModel(ticker: "MXN", amount: 0, supportsSelection: true)
+    var primaryInput = ExchangeInputModel(field: .USDc, exchangeAction: .selling)
+    var secondaryInput = ExchangeInputModel(
+        field: .init(ticker: "MXN", amount: 0, supportsSelection: true),
+        exchangeAction: .buying
+    )
 
-    var currencySelectionActiveField: ExchangeField?
+    var currencySelectionActiveInput: ExchangeInput?
     var subtitleText: String?
 
     private var exchangeRate: USDcExchangeRateModel?
@@ -28,38 +31,33 @@ public class ExchangeCalculatorViewModel {
     private func updateViewModel(with exchangeRate: USDcExchangeRateModel) {
         self.exchangeRate = exchangeRate
 
-        // Primary field value should remain unchanged.
-        let primaryAmount = primaryInputField.amount
-        if secondaryInputField.isUSDc {
-            secondaryInputField.amount = exchangeRate.calculateUSDcPrice(from: primaryAmount, action: .buying)
-        } else {
-            secondaryInputField.amount = exchangeRate.calculateTickerPrice(from: primaryAmount, action: .buying)
+        // Keep USDc value unchanged.
+        if primaryInput.field.isUSDc {
+            update(input: &secondaryInput, with: primaryInput.field.amount, exchangeRate: exchangeRate)
+        } else if secondaryInput.field.isUSDc {
+            update(input: &primaryInput, with: secondaryInput.field.amount, exchangeRate: exchangeRate)
         }
 
         subtitleText = subtitleText(for: exchangeRate)
     }
 
     private func subtitleText(for exchangeRate: USDcExchangeRateModel) -> String {
-        var ticker = ""
-        var rate = Decimal(0)
-
-        if secondaryInputField.isUSDc {
-            ticker = primaryInputField.ticker
-            rate = exchangeRate.calculateTickerPrice(from: 1, action: action(for: .primary))
-        } else {
-            ticker = secondaryInputField.ticker
-            rate = exchangeRate.calculateTickerPrice(from: 1, action: action(for: .secondary))
-        }
+        let nonUSDcInput = secondaryInput.field.isUSDc ? primaryInput : secondaryInput
+        let ticker = nonUSDcInput.field.ticker
+        let rate = exchangeRate.calculateTickerPrice(from: 1, action: nonUSDcInput.exchangeAction)
 
         return String("1 USDc = \(rate) \(ticker)")
     }
 
-    private func action(for field: ExchangeField) -> ExchangeAction {
-        switch field {
-        case .primary:
-            return .selling
-        case .secondary:
-            return .buying
+    private func update(
+        input: inout ExchangeInputModel,
+        with amount: Decimal,
+        exchangeRate: USDcExchangeRateModel
+    ) {
+        if input.field.isUSDc {
+            input.field.amount = exchangeRate.calculateUSDcPrice(from: amount, action: input.exchangeAction)
+        } else {
+            input.field.amount = exchangeRate.calculateTickerPrice(from: amount, action: input.exchangeAction)
         }
     }
 
@@ -68,62 +66,52 @@ public class ExchangeCalculatorViewModel {
 extension ExchangeCalculatorViewModel {
 
     func viewAppearedTask() async {
-        await fetchExchangeRate(for: secondaryInputField.ticker)
+        await fetchExchangeRate(for: secondaryInput.field.ticker)
     }
 
     func switchCurrenciesButtonTap() {
-        let temp = primaryInputField
-        primaryInputField = secondaryInputField
-        secondaryInputField = temp
+        swap(&primaryInput.field, &secondaryInput.field)
 
         if let exchangeRate {
             updateViewModel(with: exchangeRate)
         }
     }
 
-    func tickerButtonTap(_ field: ExchangeField) {
-        currencySelectionActiveField = field
+    func tickerButtonTap(_ field: ExchangeInput) {
+        currencySelectionActiveInput = field
     }
 
-    func amountUpdated(for field: ExchangeField, amount: Decimal) {
+    func amountUpdated(for field: ExchangeInput, amount: Decimal) {
         guard let exchangeRate else { return }
 
         switch field {
         case .primary:
-            if secondaryInputField.isUSDc {
-                secondaryInputField.amount = exchangeRate.calculateUSDcPrice(from: amount, action: action(for: .secondary))
-            } else {
-                secondaryInputField.amount = exchangeRate.calculateTickerPrice(from: amount, action: action(for: .secondary))
-            }
+            update(input: &secondaryInput, with: amount, exchangeRate: exchangeRate)
         case .secondary:
-            if primaryInputField.isUSDc {
-                primaryInputField.amount = exchangeRate.calculateUSDcPrice(from: amount, action: action(for: .primary))
-            } else {
-                primaryInputField.amount = exchangeRate.calculateTickerPrice(from: amount, action: action(for: .primary))
-            }
+            update(input: &primaryInput, with: amount, exchangeRate: exchangeRate)
         }
     }
 
-    func getTicker(for field: ExchangeField) -> String {
+    func getTicker(for field: ExchangeInput) -> String {
         switch field {
         case .primary:
-            primaryInputField.ticker
+            primaryInput.field.ticker
         case .secondary:
-            secondaryInputField.ticker
+            secondaryInput.field.ticker
         }
     }
 
-    func setTicker(for field: ExchangeField, newValue: String) {
+    func setTicker(for field: ExchangeInput, newValue: String) {
         guard newValue != getTicker(for: field) else { return }
 
         switch field {
         case .primary:
-            primaryInputField.ticker = newValue
+            primaryInput.field.ticker = newValue
         case .secondary:
-            secondaryInputField.ticker = newValue
+            secondaryInput.field.ticker = newValue
         }
 
-        currencySelectionActiveField = nil
+        currencySelectionActiveInput = nil
         Task {
             await fetchExchangeRate(for: newValue)
         }

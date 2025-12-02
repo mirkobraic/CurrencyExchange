@@ -3,7 +3,7 @@ import SwiftUI
 public struct ExchangeCalculatorView: View {
 
     @State var viewModel = ExchangeCalculatorViewModel()
-    @FocusState private var focusedField: ExchangeField?
+    @FocusState private var focusedField: ExchangeInput?
 
     public init() {}
 
@@ -21,7 +21,7 @@ public struct ExchangeCalculatorView: View {
         .maxSize()
         .background(Color(.backgroundPrimary))
         .onTapGesture { focusedField = nil }
-        .sheet(item: $viewModel.currencySelectionActiveField) { activeField in
+        .sheet(item: $viewModel.currencySelectionActiveInput) { activeField in
             CurrencySelectorView(selectedTicker: Binding {
                 viewModel.getTicker(for: activeField)
             } set: { newValue in
@@ -49,11 +49,11 @@ private extension ExchangeCalculatorView {
 
     var exchangeView: some View {
         VStack(spacing: .doubleGutter) {
-            ExchangeTextField(model: $viewModel.primaryInputField) {
+            ExchangeTextField(model: $viewModel.primaryInput.field) {
                 viewModel.tickerButtonTap(.primary)
             }
             .focused($focusedField, equals: .primary)
-            .onChange(of: viewModel.primaryInputField.amount) { oldValue, newValue in
+            .onChange(of: viewModel.primaryInput.field.amount) { oldValue, newValue in
                 guard
                     oldValue != newValue,
                     focusedField == .primary
@@ -62,11 +62,11 @@ private extension ExchangeCalculatorView {
                 viewModel.amountUpdated(for: .primary, amount: newValue)
             }
 
-            ExchangeTextField(model: $viewModel.secondaryInputField) {
+            ExchangeTextField(model: $viewModel.secondaryInput.field) {
                 viewModel.tickerButtonTap(.secondary)
             }
             .focused($focusedField, equals: .secondary)
-            .onChange(of: viewModel.secondaryInputField.amount) { oldValue, newValue in
+            .onChange(of: viewModel.secondaryInput.field.amount) { oldValue, newValue in
                 guard
                     oldValue != newValue,
                     focusedField == .secondary
@@ -83,6 +83,7 @@ private extension ExchangeCalculatorView {
     var switchCurrenciesButton: some View {
         Button {
             viewModel.switchCurrenciesButtonTap()
+            switchFocusedField()
         } label: {
             Image(.arrowDown)
                 .resizable()
@@ -92,6 +93,17 @@ private extension ExchangeCalculatorView {
             Circle()
                 .fill(Color(.backgroundPrimary))
                 .frame(width: 32, height: 32)
+        }
+    }
+
+    func switchFocusedField() {
+        switch focusedField {
+        case .primary:
+            focusedField = .secondary
+        case .secondary:
+            focusedField = .primary
+        case .none:
+            break
         }
     }
 
