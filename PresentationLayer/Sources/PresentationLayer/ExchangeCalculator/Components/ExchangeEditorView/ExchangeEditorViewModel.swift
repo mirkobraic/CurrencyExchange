@@ -5,82 +5,86 @@ import DomainLayer
 @Observable
 class ExchangeEditorViewModel {
 
-    var primaryInput: ExchangeEditorInputModel
-    var secondaryInput: ExchangeEditorInputModel
+    var primaryField: ExchangeTextFieldModel
+    var secondaryField: ExchangeTextFieldModel
 
-    private var exchangeRate: USDcExchangeRateModel?
+    private var exchangeRate: ExchangeRateModel?
+
+    private var primaryTicker: Ticker { .init(primaryField.ticker) }
+    private var secondaryTicker: Ticker { .init(secondaryField.ticker) }
 
     init(
         primaryField: ExchangeTextFieldModel,
         secondaryField: ExchangeTextFieldModel,
-        exchangeRate: USDcExchangeRateModel? = nil
+        exchangeRate: ExchangeRateModel? = nil
     ) {
-        primaryInput = .init(field: primaryField, exchangeAction: .selling)
-        secondaryInput = .init(field: secondaryField, exchangeAction: .buying)
+        self.primaryField = primaryField
+        self.secondaryField = secondaryField
         self.exchangeRate = exchangeRate
     }
 
-    func update(exchangeRate: USDcExchangeRateModel) {
+    func update(exchangeRate: ExchangeRateModel) {
         self.exchangeRate = exchangeRate
 
-        // TODO: Non-ideal solution.
-        // Keep USDc value unchanged.
-        if primaryInput.field.isUSDc {
-            update(input: &secondaryInput, with: primaryInput.field.amount, exchangeRate: exchangeRate)
-        } else if secondaryInput.field.isUSDc {
-            update(input: &primaryInput, with: secondaryInput.field.amount, exchangeRate: exchangeRate)
+        // Find which input contains quote ticker and update it.
+        if primaryTicker == exchangeRate.quote {
+            let result = calculateExchange(for: secondaryField, with: exchangeRate)
+            primaryField.amount = result.amount
+        } else if secondaryTicker == exchangeRate.quote {
+            let result = calculateExchange(for: primaryField, with: exchangeRate)
+            secondaryField.amount = result.amount
         }
     }
 
     func getTicker(for field: ExchangeEditorInputType) -> String {
         switch field {
         case .primary:
-            primaryInput.field.ticker
+            primaryField.ticker
         case .secondary:
-            secondaryInput.field.ticker
+            secondaryField.ticker
         }
     }
     
     func update(ticker: String, for field: ExchangeEditorInputType) {
         switch field {
         case .primary:
-            primaryInput.field.ticker = ticker
-            primaryInput.field.imageName = ticker
+            primaryField.ticker = ticker
+            primaryField.imageName = ticker
         case .secondary:
-            secondaryInput.field.ticker = ticker
-            secondaryInput.field.imageName = ticker
+            secondaryField.ticker = ticker
+            secondaryField.imageName = ticker
         }
     }
 
-    func userInput(_ amount: Decimal, in field: ExchangeEditorInputType) {
+    func userInputChanged(in field: ExchangeEditorInputType) {
         guard let exchangeRate else { return }
 
         switch field {
         case .primary:
-            update(input: &secondaryInput, with: amount, exchangeRate: exchangeRate)
+            let result = calculateExchange(for: primaryField, with: exchangeRate)
+            secondaryField.amount = result.amount
         case .secondary:
-            update(input: &primaryInput, with: amount, exchangeRate: exchangeRate)
+            let result = calculateExchange(for: secondaryField, with: exchangeRate)
+            primaryField.amount = result.amount
         }
     }
 
     func switchCurrenciesButtonTap() {
-        swap(&primaryInput.field, &secondaryInput.field)
+        swap(&primaryField, &secondaryField)
 
         if let exchangeRate {
             update(exchangeRate: exchangeRate)
         }
     }
 
-    private func update(
-        input: inout ExchangeEditorInputModel,
-        with amount: Decimal,
-        exchangeRate: USDcExchangeRateModel
-    ) {
-        if input.field.isUSDc {
-            input.field.amount = exchangeRate.calculateUSDcPrice(from: amount, action: input.exchangeAction)
-        } else {
-            input.field.amount = exchangeRate.calculateTickerPrice(from: amount, action: input.exchangeAction)
-        }
+    private func calculateExchange(
+        for inputField: ExchangeTextFieldModel,
+        with exchangeRate: ExchangeRateModel
+    ) -> ExchangePayload {
+        let inputPayload = ExchangePayload(ticker: inputField.ticker, amount: inputField.amount)
+        let outputPayload = exchangeRate.exchange(inputPayload, selling: primaryTicker, buying: secondaryTicker)
+
+        return outputPayload
     }
 
 }

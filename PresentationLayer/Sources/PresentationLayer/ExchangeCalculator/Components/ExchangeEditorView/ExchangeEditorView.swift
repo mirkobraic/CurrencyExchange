@@ -22,32 +22,32 @@ struct ExchangeEditorView: View {
 private extension ExchangeEditorView {
 
     var buyingField: some View {
-        ExchangeTextField(model: $viewModel.primaryInput.field) {
+        ExchangeTextField(model: $viewModel.primaryField) {
             currencySelectedCallback?(.primary)
         }
         .focused($focusedField, equals: .primary)
-        .onChange(of: viewModel.primaryInput.field.amount) { oldValue, newValue in
+        .onChange(of: viewModel.primaryField.amount) { oldValue, newValue in
             guard
                 oldValue.roundedAsCurrency != newValue.roundedAsCurrency,
                 focusedField == .primary
             else { return }
 
-            viewModel.userInput(newValue, in: .primary)
+            viewModel.userInputChanged(in: .primary)
         }
     }
 
     var sellingField: some View {
-        ExchangeTextField(model: $viewModel.secondaryInput.field) {
+        ExchangeTextField(model: $viewModel.secondaryField) {
             currencySelectedCallback?(.secondary)
         }
         .focused($focusedField, equals: .secondary)
-        .onChange(of: viewModel.secondaryInput.field.amount) { oldValue, newValue in
+        .onChange(of: viewModel.secondaryField.amount) { oldValue, newValue in
             guard
                 oldValue.roundedAsCurrency != newValue.roundedAsCurrency,
                 focusedField == .secondary
             else { return }
 
-            viewModel.userInput(newValue, in: .secondary)
+            viewModel.userInputChanged(in: .secondary)
         }
     }
 

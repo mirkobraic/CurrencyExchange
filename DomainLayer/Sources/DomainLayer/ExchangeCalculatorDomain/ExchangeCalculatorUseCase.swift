@@ -6,21 +6,23 @@ public actor ExchangeCalculatorUseCase: ExchangeCalculatorUseCaseProtocol {
         self.dataSource = dataSource
     }
 
-    public func getUSDcExchangeRates(for tickers: [String]) async throws -> [USDcExchangeRateModel] {
+    public func getUSDcExchangeRates(for tickers: [String]) async throws -> [ExchangeRateModel] {
         try await dataSource.getUSDcExchangeRates(for: tickers)
     }
 
-    public func getUSDcExchangeRate(for ticker: String) async throws -> USDcExchangeRateModel {
+    public func getUSDcExchangeRate(for ticker: String) async throws -> ExchangeRateModel {
         let exchangeRates = try await dataSource.getUSDcExchangeRates(for: [ticker])
 
-        guard let requestedExchangeRate = exchangeRates.first else {
+        guard var requestedExchangeRate = exchangeRates.first else {
             throw ExchangeRateError.rateNotFound
         }
+
+        requestedExchangeRate.exchangePolicy = .standard
 
         return requestedExchangeRate
     }
 
-    public func getUSDcExchangeRateStream(for ticker: String) async throws -> AsyncStream<USDcExchangeRateModel> {
+    public func getUSDcExchangeRateStream(for ticker: String) async throws -> AsyncStream<ExchangeRateModel> {
         // TODO: AsyncStream (or Combine) should be used to ensure we don't have stale exchange rates.
         fatalError("Unimplemented")
     }

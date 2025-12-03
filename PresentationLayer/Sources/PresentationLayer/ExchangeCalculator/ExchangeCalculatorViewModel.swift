@@ -16,7 +16,7 @@ public class ExchangeCalculatorViewModel {
     var currencySelectionActiveInput: ExchangeEditorInputType?
     var subtitleText: Loadable<String> = .initial(placeholder: "Placeholder string")
 
-    private var exchangeRate: USDcExchangeRateModel?
+    private var exchangeRate: ExchangeRateModel?
 
     private func fetchExchangeRate(for ticker: String) async {
         guard !ticker.isEmpty else {
@@ -32,26 +32,24 @@ public class ExchangeCalculatorViewModel {
         }
     }
 
-    private func updateViewModel(with exchangeRate: USDcExchangeRateModel) {
+    private func updateViewModel(with exchangeRate: ExchangeRateModel) {
         self.exchangeRate = exchangeRate
         exchangeEditorViewModel.update(exchangeRate: exchangeRate)
         updateSubtitleText(for: exchangeRate)
     }
 
-    private func updateSubtitleText(for exchangeRate: USDcExchangeRateModel) {
-        let usdcAmount = Decimal(1)
-        // TODO: Non-ideal solution.
-        let nonUSDcInput = exchangeEditorViewModel.secondaryInput.field.isUSDc ?
-        exchangeEditorViewModel.primaryInput :
-        exchangeEditorViewModel.secondaryInput
-
-        let ticker = nonUSDcInput.field.ticker
-        let rate = exchangeRate.calculateTickerPrice(from: usdcAmount, action: nonUSDcInput.exchangeAction)
+    private func updateSubtitleText(for exchangeRate: ExchangeRateModel) {
+        let baseTicker = exchangeRate.base.description.uppercased() // TODO: fix uppercase C issue
+        let quoteTicker = exchangeRate.quote.description.uppercased()
+        let rate = exchangeRate.getExchangeCoeficient(
+            selling: .init(exchangeEditorViewModel.primaryField.ticker),
+            buying: .init(exchangeEditorViewModel.secondaryField.ticker)
+        )
 
         let subtitle = String(
             format: "%@ = %@",
-            usdcAmount.asCurrency(currencySymbol: Constants.usdcTicker),
-            rate.asCurrency(currencySymbol: ticker)
+            Decimal(1).asCurrency(currencySymbol: baseTicker),
+            rate.asCurrency(currencySymbol: quoteTicker)
         )
 
         subtitleText = .loaded(subtitle)

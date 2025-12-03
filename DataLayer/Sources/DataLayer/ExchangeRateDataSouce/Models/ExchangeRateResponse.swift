@@ -12,13 +12,17 @@ struct ExchangeRateResponse: Decodable {
 
 extension ExchangeRateResponse {
 
-    func toDomainModel() -> USDcExchangeRateModel? {
+    func toDomainModel() -> ExchangeRateModel? {
+        let bookComponents = book.split(separator: "_")
         guard
             let ask = Decimal(string: ask),
-            let bid = Decimal(string: bid)
+            let bid = Decimal(string: bid),
+            let baseTicker = bookComponents.first.map(String.init),
+            let quoteTicker = bookComponents.last.map(String.init)
         else { return nil }
 
-        return USDcExchangeRateModel(ask: ask, bid: bid, book: book, date: date)
+
+        return ExchangeRateModel(ask: ask, bid: bid, base: .init(baseTicker), quote: .init(quoteTicker), date: date)
     }
 
 }
