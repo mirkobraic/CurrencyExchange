@@ -72,6 +72,7 @@ class ExchangeEditorViewModel {
     func switchCurrenciesButtonTap() {
         swap(&primaryField, &secondaryField)
 
+        // TODO: Fix bug when swapping fields which have max values.
         if let exchangeRate {
             update(exchangeRate: exchangeRate)
         }
