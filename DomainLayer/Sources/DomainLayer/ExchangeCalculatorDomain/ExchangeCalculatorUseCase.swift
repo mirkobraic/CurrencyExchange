@@ -17,7 +17,7 @@ public actor ExchangeCalculatorUseCase: ExchangeCalculatorUseCaseProtocol {
             throw ExchangeRateError.rateNotFound
         }
 
-        requestedExchangeRate.exchangePolicy = .standard
+        requestedExchangeRate.exchangePolicy = .adjusted(feePercentage: 10)
 
         return requestedExchangeRate
     }
